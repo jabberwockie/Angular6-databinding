@@ -1,4 +1,15 @@
-import {Component, OnInit, Input, SimpleChange, DoCheck, AfterContentInit, OnChanges} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  SimpleChange,
+  DoCheck,
+  AfterContentInit,
+  OnChanges,
+  OnDestroy,
+  ViewChild,
+  ElementRef, ContentChild
+} from '@angular/core';
 import {SimpleChanges} from '@angular/core';
 
 @Component({
@@ -10,9 +21,11 @@ export class ServerElementComponent implements
   OnInit,
   DoCheck,
   AfterContentInit,
-  OnChanges{
+  OnChanges,
+  OnDestroy{
   @Input('srvElement') element: {type: string, name: string, content: string};
   @Input() name: string;
+  @ContentChild('contentParagraph') paragraph: ElementRef; /* get access to a content that is stored in another component and then passed on via ngContent*/
 
   constructor() {
     console.log('constructor called!');
@@ -33,7 +46,12 @@ export class ServerElementComponent implements
 
   ngAfterContentInit(){
     console.log('ngAfterContentInit called!');
+    console.log('Paragraph Content: ' + this.paragraph.nativeElement.textContent);
   }
 
+
+  ngOnDestroy() {
+    console.log('OnDestroy called!');
+  }
 
 }
